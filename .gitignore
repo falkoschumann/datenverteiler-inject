@@ -1,6 +1,13 @@
-*.class
+# Maven #
+target/
 
-# Package Files #
-*.jar
-*.war
-*.ear
+# IDEs #
+.classpath
+.project
+.settings/
+*.iml
+.idea/
+
+# OS #
+.DS_Store
+Thumbs.db
