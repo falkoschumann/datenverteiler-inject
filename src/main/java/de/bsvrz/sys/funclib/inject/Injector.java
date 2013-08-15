@@ -77,13 +77,13 @@ public class Injector {
             if (isSingleton)
                 singletons.put(clazz, result);
             return result;
-        } catch (RuntimeException ex) {
+        } catch (Exception ex) {
             throw new InjectionException(
                     "Eine Instanz der Klasse kann nicht erzeugt werden: " + clazz, ex);
         }
     }
 
-    private <T> T injectConstructor(Class<T> type) {
+    private <T> T injectConstructor(Class<T> type) throws Exception {
         if (bindings.containsKey(type))
             type = (Class<T>) bindings.get(type).implementationClass;
 
@@ -91,7 +91,7 @@ public class Injector {
         if (constructor != null)
             return invoke(constructor);
 
-        return BeanUtil.createObject(type);
+        return (T) type.newInstance();
     }
 
     private <T> Constructor<T> getInjectableConstructors(Class<T> type) {
@@ -113,7 +113,7 @@ public class Injector {
         return element.isAnnotationPresent(Inject.class);
     }
 
-    private <T> T invoke(Constructor<T> constructor) {
+    private <T> T invoke(Constructor<T> constructor) throws Exception {
         final Class<?>[] parameterTypes = constructor.getParameterTypes();
         final Type[] types = constructor.getGenericParameterTypes();
         Object[] arguments = new Object[parameterTypes.length];
@@ -126,10 +126,10 @@ public class Injector {
                 arguments[i] = make(parameterType);
             }
         }
-        return BeanUtil.createObject(constructor, arguments);
+        return constructor.newInstance(arguments);
     }
 
-    private <T> void injectFields(T result) {
+    private <T> void injectFields(T result) throws Exception {
         // TODO Zuerst die Felder der Superklasse injizieren
         for (Field e : result.getClass().getDeclaredFields()) {
             if (isInjectable(e)) {
@@ -139,16 +139,15 @@ public class Injector {
                 if (Provider.class.isAssignableFrom(fieldType)) {
                     ParameterizedType parameterizedType = (ParameterizedType) e.getGenericType();
                     value = new ProviderImpl((Class<?>) parameterizedType.getActualTypeArguments()[0], this);
-                    BeanUtil.setField(result, e, value);
                 } else {
                     value = make(fieldType);
                 }
-                BeanUtil.setField(result, e, value);
+                e.set(result, value);
             }
         }
     }
 
-    private <T> void injectMethods(T result) {
+    private <T> void injectMethods(T result) throws Exception {
         // TODO Zuerst die Methoden der Superklasse injizieren
         for (Method e : result.getClass().getDeclaredMethods()) {
             if (isInjectable(e)) {
@@ -159,7 +158,7 @@ public class Injector {
 
     }
 
-    private void invoke(Object object, Method method) {
+    private void invoke(Object object, Method method) throws Exception {
         final Class<?>[] parameterTypes = method.getParameterTypes();
         final Type[] types = method.getGenericParameterTypes();
         Object[] arguments = new Object[parameterTypes.length];
@@ -172,7 +171,7 @@ public class Injector {
                 arguments[i] = make(parameterType);
             }
         }
-        BeanUtil.invokeMethod(object, method, arguments);
+        method.invoke(object, arguments);
     }
 
 }

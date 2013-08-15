@@ -86,38 +86,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>de.bsvrz.dav</groupId>
-            <artifactId>de.bsvrz.dav.daf</artifactId>
-            <version>3.5.0</version>
-        </dependency>
-        <dependency>
             <groupId>de.bsvrz.sys.funclib</groupId>
             <artifactId>de.bsvrz.sys.funclib.debug</artifactId>
-            <version>3.5.0</version>
-        </dependency>
-        <dependency>
-            <groupId>de.bsvrz.sys.funclib</groupId>
-            <artifactId>de.bsvrz.sys.funclib.commandLineArgs</artifactId>
-            <version>3.5.0</version>
-        </dependency>
-        <dependency>
-            <groupId>de.bsvrz.sys.funclib</groupId>
-            <artifactId>de.bsvrz.sys.funclib.crypt</artifactId>
-            <version>3.5.0</version>
-        </dependency>
-        <dependency>
-            <groupId>de.bsvrz.sys.funclib</groupId>
-            <artifactId>de.bsvrz.sys.funclib.concurrent</artifactId>
-            <version>3.5.0</version>
-        </dependency>
-        <dependency>
-            <groupId>de.bsvrz.sys.funclib</groupId>
-            <artifactId>de.bsvrz.sys.funclib.dataSerializer</artifactId>
-            <version>3.5.0</version>
-        </dependency>
-        <dependency>
-            <groupId>de.bsvrz.sys.funclib</groupId>
-            <artifactId>de.bsvrz.sys.funclib.timeout</artifactId>
             <version>3.5.0</version>
         </dependency>
         <dependency>
@@ -129,12 +99,6 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.11</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.unitils</groupId>
-            <artifactId>unitils-core</artifactId>
-            <version>3.3</version>
             <scope>test</scope>
         </dependency>
         <dependency>

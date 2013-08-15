@@ -24,7 +24,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package de.bsvrz.sys.funclib.datenkatalog.di;
+package de.bsvrz.sys.funclib.inject;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -45,7 +45,7 @@ import org.atinject.tck.auto.accessories.SpareTire;
  *
  * @author Falko Schumann &lt;falko.schumann@muspellheim.de&gt;
  */
-public class MyTck extends TestSuite {
+public class TckTest extends TestSuite {
 
     public static Test suite() {
         final Injector injector = new Injector();
@@ -55,9 +55,11 @@ public class MyTck extends TestSuite {
         injector.addBinding(Tire.class).named("spare").implementedBy(SpareTire.class);
 
         Car car = injector.make(Car.class);
-        return Tck.testsFor(car,
+        return Tck.testsFor(
+                car,
                 false /* supportsStatic */,
-                false /* supportsPrivate */);
+                false /* supportsPrivate */
+        );
     }
 
 }
